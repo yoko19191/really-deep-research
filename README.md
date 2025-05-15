@@ -1,2 +1,10 @@
-# really-deep-research
-a really deep research is all you need 
+# Really Deep Research
+
+> Deep Research = make it deep + feed it clean + simple orchestration
+>
+
+
+
+## Quick Start
+
+## Features

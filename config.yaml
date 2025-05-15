@@ -1,0 +1,27 @@
+llm_model:
+  type: openai
+  model: qwen3-235b-a22b
+  enable_thinking: false
+  api_key: ${OPENAI_API_KEY}
+  api_base: ${OPENAI_BASE_URL}
+
+
+embedding_model:
+  model: text-embedding-3
+  dimension: 1024
+  api_key: ${EMBEDDING_API_KEY}
+  api_base: ${EMBEDDING_API_BASE}
+
+
+rerank_model:
+  model: gte-rerank 
+  api_key: ${RERANK_API_KEY}
+  api_base: ${RERANK_API_BASE}
+
+
+vector_db:
+  type: lancedb
+  persistent: true
+  persistent_path: .local_db
+
+

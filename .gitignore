@@ -172,3 +172,6 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# folder-alias vscode plugin 
+folder-alias.json

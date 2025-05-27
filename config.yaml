@@ -1,5 +1,6 @@
+# model configuration
 llm_model:
-  type: openai
+  provider: openai # litellm provider 
   model: qwen3-235b-a22b
   enable_thinking: false
   api_key: ${OPENAI_API_KEY}
@@ -19,9 +20,14 @@ rerank_model:
   api_base: ${RERANK_API_BASE}
 
 
+# database configuration 
 vector_db:
-  type: lancedb
-  persistent: true
+  type: lancedb # optional: lancedb
   persistent_path: .local_db
 
-
+# agent configuration
+coder_agent:
+  sandbox_type: e2b # optional: e2b, sandboxfusion 
+  api_key: ${E2B_API_KEY}
+  api_base: ${SANDBOX_FUSION_API_BASE}
+  

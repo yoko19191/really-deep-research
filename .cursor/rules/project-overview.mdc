@@ -1,0 +1,7 @@
+---
+description: 这个文件包含了项目核心愿景、主要目标以及项目旨在解决什么问题的高层次解释。
+globs: 
+alwaysApply: false
+---
+本项目旨在通过软件工程手段最大化 Deep Research(一种基于 AI Agent 的信息搜集整理编排最终输出详实报告的产品) 性能。项目前后端分离。后端代码保存在 Src 目录下。使用 FastAPI 对话进行服务。使用 LangGraph 和 LangChain 进行 AI 编程，使用 LiteLLM 兼容多种类型的 AI 模型。使用 LanceDB 作为向量数据库，在本地实现持久化。使用 playwright+crawl4ai 实现高性能异步多线程网络爬取，可以从百度谷歌获取爬虫。所有的项目设置和模块参数设置，通过根目录下的 config.yaml 集中管理。
+

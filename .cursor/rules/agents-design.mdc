@@ -1,0 +1,37 @@
+---
+description: 这个文件用于描述项目整体的智能体设计
+globs: 
+alwaysApply: false
+---
+# 智能体设计指南
+
+为了实现我们伟大的 Deep Research 系统，整个系统由五大 Agent 编排实现，分别是:
+1. Coordinator 协调者：作为用户接口和总控，负责理解用户意图、管理偏好、启动流程和呈现最终结果。
+2. Planner 规划者：核心大脑，负责将复杂的研究任务分解为可执行的子任务，制定计划。调度 Worker Agents 执行子任务，并将 Works 反馈的工作结果的初步聚合
+3. Worker Agents (执行者) 
+- Crawler (爬取者): ReAct 风格的互联网信息爬取智能体, 能够将子任务拆解成多个查询，使用搜索引擎进行网页搜索，然后根据查询结果智能爬取最相关的URL内容。将内容整合返回给 Planner
+- Coder (编程专家): CoodeAct 风格的代码执行智能体, 能够能够组合使用多个Python函数实现子任务, 在代码沙盒环境中执行代码。
+4. Reporter 报告专家: 负责将 Planner 聚合后的信息进行深度整合、提炼，并生成结构化、易读的研究报告。输出成带有引用的 Markdown。
+
+这些 Agents 的实现逻辑都包含在 src/agents 的各个模块中。每个模块至少分离四个逻辑。
+1. tools: 用于实现或者包装 Python 函数为可供 LangGraph 使用的 tools
+2. prompt: 用于存储 Agent 需要使用的 Prompt 
+3. graph: 用 LangGraph 实现 Agent 将 Tools + Prompt 连接起来
+
+在 Agent 调用的 Pydantic 定义的 Class 类型在 src/schema.py 中实现。
+最终的 agent 编排在 src/agents/chord.py 中实现。
+
+接下来我会描述各个 Agent 的具体实现方式
+
+## Coordainator 协调者
+1. 
+
+## Planner 规划者
+
+## Crawler 爬取者
+
+## Coder 编程专家
+
+## Reporter 报告生成专家
+
+

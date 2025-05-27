@@ -1,0 +1,25 @@
+---
+description: 改文件描述了项目实施的代码风格、代码实施要求和开发偏好
+globs: 
+alwaysApply: false
+---
+## 代码风格指导
+1. 强制 PEP 8: 所有生成的 Python 代码必须严格遵循 PEP 8 规范进行格式化和风格指导
+2. 拥抱 Pythonic: 优先采用 Pythonic 的表达方式和习语，例如列表推导 (list comprehensions)、生成器表达式 (generator expressions)、enumerate()、zip() 等，以提升代码的简洁性和可读性。
+3. 强制类型注解: 为所有函数/方法的参数、返回值以及关键的类属性和变量添加明确的类型提示。
+利用 typing 模块: 积极使用 typing 模块中的高级类型工具 (如 Optional, Union, Callable, TypeVar, Generic, Literal, TypedDict, Protocol) 来增强代码的静态分析能力、可维护性和开发者体验
+
+## 代码实施建议
+1. 标准库优先: 在引入第三方依赖前，充分评估是否可使用 Python 标准库中的模块和函数来解决问题。
+2. 善用语言特性: 指导在合适的场景下使用迭代器、生成器、上下文管理器 (with 语句)、装饰器、functools 模块等 Python 高级特性，以编写更高效、更优雅的代码
+3. 逻辑组织: 指导构建符合 Python 约定的、逻辑清晰的模块和包结构 (正确使用 __init__.py 文件，合理组织子模块，采用明确的绝对或相对导入策略)
+4. 分发准备: 对于计划分发的库或应用，提示或协助生成符合标准的打包配置文件 (如 pyproject.toml 中的构建系统配置
+
+
+## 代码实施要求
+1. 对于所有涉及 I/O 密集型操作（如数据库查询、外部 API 调用、文件读写）的路由处理器和依赖项，默认使用 async def 定义，并配合 await 调用异步操作，以最大化并发性能和应用吞吐量
+2. 使用 httpx 进行异步网络请求
+3. 在构建 LangChain 应用时，优先采用 LangChain Expression Language (LCEL) 通过管道符 (|) 来组合链 (Chains)、提示 (Prompts)、模型 (Models)、输出解析器 (Output Parsers) 和检索器 (Retrievers) 等组件。LCEL 原生支持流式处理、异步执行、批量调用和可观测性
+4. 模块化与可配置的 LLM 组件 (Modular & Configurable LLM Components): 设计 LangChain 应用时，强调组件的模块化和可配置性。例如：将复杂的 LLM 交互分解为更小、职责单一的链。为 Agents 定义清晰、可复用的工具 (Tools)。构建可配置的检索器 (Retrievers) 以适应不同的 RAG 场景
+5. 在使用 LangGraph 构建循环或有状态的 LLM 应用时：明确定义图的状态模式 (State Schema)，并使用类型提示（如 Pydantic 模型或 TypedDict）。通过节点 (Nodes) 函数显式地更新和传递状态。利用条件边 (Conditional Edges) 根据当前状态或节点输出来决定图的下一个执行路径，以实现复杂的控制流和代理循环
+6. 使用 rich 替代简单的 print。已实现更好的终端输出。

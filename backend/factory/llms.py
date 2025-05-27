@@ -1,6 +1,5 @@
-from pathlib import Path 
-
 from typing import Any, Dict 
+from pathlib import Path 
 
 from langchain_openai import ChatOpenAI  
 
@@ -77,8 +76,5 @@ def get_llm_by_type(llm_type: LLMType) -> ChatOpenAI:
         # For now, we let the more specific error from _create_llm_use_conf propagate
         raise ValueError(f"Can not get llm by type: {e}")
 
-
-if __name__ == "__main__":
-    basic_llm = get_llm_by_type("basic") 
-    print(basic_llm.invoke("Tell me who are you? What Can you do?"))
+    
 

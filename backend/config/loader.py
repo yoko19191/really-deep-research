@@ -40,6 +40,7 @@ def process_value(value: Any) -> Any:
     else:
         return replace_env_vars(value)
 
+
 def load_yaml_config(file_path: Union[Path, str]=None) -> dict[str, Any]:
     """Load yaml configuration from .yaml configuration file.
     Args:
@@ -76,6 +77,3 @@ def load_yaml_config(file_path: Union[Path, str]=None) -> dict[str, Any]:
     except yaml.YAMLError as e:
         raise yaml.YAMLError(f"Failed to parse YAML in {file_path}: {e}")
     
-    
-# if __name__ == "__main__":
-#     print(load_yaml_config())

@@ -55,10 +55,15 @@ __all__ = [
 
 
 
-# print(TEAM_MEMBERS)
-# print(TEAM_MEMBER_CONFIGURATIONS)
-# print(load_yaml_config())
-# print(SELECTED_SEARCH_ENGINE)
-# print(AGENT_LLM_MAP)
-# print(BUILT_IN_QUESTIONS)
-# print(BUILT_IN_QUESTIONS_ZH_CN)
+# print(TEAM_MEMBERS, type(TEAM_MEMBERS))
+# print(TEAM_MEMBER_CONFIGURATIONS, type(TEAM_MEMBER_CONFIGURATIONS))
+
+# a = load_yaml_config()
+# print(a, type(a))
+
+# print(SELECTED_SEARCH_ENGINE, type(SELECTED_SEARCH_ENGINE))
+
+# print(AGENT_LLM_MAP, type(AGENT_LLM_MAP))
+
+# print(BUILT_IN_QUESTIONS, type(BUILT_IN_QUESTIONS))
+# print(BUILT_IN_QUESTIONS_ZH_CN, type(BUILT_IN_QUESTIONS_ZH_CN))

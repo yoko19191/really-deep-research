@@ -5,8 +5,6 @@ description = "Deep Research = make it deep + feed it clean + simple orchestrati
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "e2b-code-interpreter>=1.5.0",
-    "envyaml>=1.10.211231",
     "langchain>=0.3.25",
     "langchain-openai>=0.3.16",
     "langgraph>=0.4.3",
@@ -19,4 +17,6 @@ dev = [
     "ruff>=0.11.9",
 ]
 
+[tool.hatch.build.targets.wheel]
+packages = ["backend"]
 

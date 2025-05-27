@@ -1,78 +1,81 @@
 import os 
-from typing import Any
+from typing import Any, Union
+from pathlib import Path 
 import yaml
 
+_config_cache: dict[str, dict[str, Any]] = {} # Cache for configs
 
-def replace_env_vars(value: str) -> str:
-    """Replace environment variables in a string.
+
+def replace_env_vars(value: Any) -> Any:
+    """Replace environment variables in a string or list.
     Args:
-        value (str): The string to replace environment variables in.
+        value (Any): The value to replace environment variables in.
         
     Returns:
-        str: The string with environment variables replaced.
+        Any: The value with environment variables replaced.
     """
-    if not isinstance(value, str):
+    if isinstance(value, str):
+        if value.startswith('$'):
+            env_var = value[1:]
+            return os.getenv(env_var, value)
+        # Optional: handle embedded env vars like ${VAR} or $VAR
+        # return os.path.expandvars(value)
         return value
-    if value.startswith('$'):
-        env_var = value[1:]
-        return os.getenv(env_var, value)
     return value
 
 
-def process_dict(config: dict[str, Any]) -> dict[str, Any]:
-    """Recursively process a dictionary to replace environment variables.
+
+def process_value(value: Any) -> Any:
+    """Recursively process a value to replace environment variables.
     Args:
-        config (dict[str, Any]): The dictionary to process.
+        value (Any): The value to process.
 
     Returns:
-        dict[str, Any]: The processed dictionary.
+        Any: The processed value.
     """
-    results = {}
-    for key, value in config.items():
-        if isinstance(value, dict):
-            results[key] = process_dict(value)
-        elif isinstance(value, list):
-            results[key] = replace_env_vars(value)
-        else:
-            results[key] = value
-            
-    return results
+    if isinstance(value, dict):
+        return {k: process_value(v) for k, v in value.items()}
+    elif isinstance(value, list):
+        return [process_value(item) for item in value]
+    else:
+        return replace_env_vars(value)
 
-
-
-_config_cache: dict[str, dict[str, Any]] = {}
-
-
-def load_yaml_config(file_path: str) -> dict[str, Any]:
-    """Load and process YAML configuration from .yaml configuration file. 
+def load_yaml_config(file_path: Union[Path, str]=None) -> dict[str, Any]:
+    """Load yaml configuration from .yaml configuration file.
     Args:
-        file_path (str): The path to the configuration file.
+        file_path (Union[Path, str]): The path to the configuration file.
     Returns:
         dict[str, Any]: The processed configuration.
-    """ 
-    # Check if file_path is exists 
-    if not os.path.exists(file_path):
-        raise ValueError(f"Config file do not exists: {file_path}")
+    """
+    if file_path is None:
+        root_path = Path(__file__).parent.parent.parent.resolve() 
+        file_path = root_path / 'config.yaml' # default read config.yaml from project root dir 
+    else:
+        file_path = Path(file_path).resolve()  # Convert to absolute path
+        
+    if not file_path.exists():
+        raise FileNotFoundError(f"Config file not found: {file_path}")
     
-    # Check if file_path is yaml field 
-    if not file_path.endswith('.yaml'):
-        raise ValueError(f"Invalid config file path: {file_path} only .yaml files are allowed")
+    if file_path.suffix.lower() not in (".yaml", ".yml"):
+        raise ValueError(
+            f"Invalid config file extension: {file_path.suffix}. "
+            "Expected .yaml or .yml"
+        )
+        
+    # Use absolute path as cache key
+    cache_key = str(file_path)
+    if cache_key in _config_cache:
+        return _config_cache[cache_key]
+        
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            config = yaml.safe_load(f)
+        processed_config = process_value(config) # read value from environment variable
+        _config_cache[cache_key] = processed_config
+        return processed_config
+    except yaml.YAMLError as e:
+        raise yaml.YAMLError(f"Failed to parse YAML in {file_path}: {e}")
     
-    # Check if file_path is in cache
-    if file_path in _config_cache:
-        return _config_cache[file_path]
     
-    # load yaml file 
-    with open(file_path, 'r') as f:
-        config = yaml.safe_load(f) 
-    
-    processed_config = process_dict(config)
-    
-    # load configuration into cache dict 
-    _config_cache[file_path] = processed_config
-    return processed_config
-    
-    
-    
-    
-    
+# if __name__ == "__main__":
+#     print(load_yaml_config())

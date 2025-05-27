@@ -1,33 +1,24 @@
-# model configuration
-llm_model:
-  provider: openai # litellm provider 
-  model: qwen3-235b-a22b
-  enable_thinking: false
-  api_key: ${OPENAI_API_KEY}
-  api_base: ${OPENAI_BASE_URL}
+# LLM_TYPE (factory/llms.py)
+BASIC_MODEL:
+  api_key: $BASIC_MODEL_API_KEY
+  base_url: https://ark.cn-beijing.volces.com/api/v3
+  model: doubao-1-5-pro-256k-250115
 
 
-embedding_model:
-  model: text-embedding-3
-  dimension: 1024
-  api_key: ${EMBEDDING_API_KEY}
-  api_base: ${EMBEDDING_API_BASE}
+REASONING_MODEL:
+  api_key: $REASONING_MODEL_API_KEY
+  base_url: https://ark.cn-beijing.volces.com/api/v3
+  model: doubao-1-5-thinking-pro-250415
 
 
-rerank_model:
-  model: gte-rerank 
-  api_key: ${RERANK_API_KEY}
-  api_base: ${RERANK_API_BASE}
+VISION_MODEL:
+  api_key: $VISION_MODEL_API_KEY
+  base_url: https://ark.cn-beijing.volces.com/api/v3
+  model: doubao-1.5-vision-pro-250328
 
 
-# database configuration 
-vector_db:
-  type: lancedb # optional: lancedb
-  persistent_path: .local_db
-
-# agent configuration
-coder_agent:
-  sandbox_type: e2b # optional: e2b, sandboxfusion 
-  api_key: ${E2B_API_KEY}
-  api_base: ${SANDBOX_FUSION_API_BASE}
-  
+# EMBEDDING_TYPE (factory/embeddings.py)
+EMBEDDING_MODEL:
+  api_key: $EMBEDDING_MODEL_API_KEY
+  base_url: https://ark.cn-beijing.volces.com/api/v3
+  model: doubao-embedding-vision-241215

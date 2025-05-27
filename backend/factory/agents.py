@@ -3,8 +3,7 @@ from langgraph.prebuilt import create_react_agent
 from backend.prompts import apply_prompt_template 
 from backend.config.agents import AGENT_LLM_MAP 
 
-from .agents import get_llm_by_type
-
+from .llms import get_llm_by_type
 
 
 # Create agents using configured LLM types

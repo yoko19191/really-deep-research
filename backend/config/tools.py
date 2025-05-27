@@ -1,11 +1,7 @@
 import os 
 import enum 
 
-from dotenv import load_dotenv, find_dotenv
-
-_ = load_dotenv(find_dotenv())
-
-
+# Search Engine Enume
 class SearchEngine(enum.Enum):
     TAVILY = "tavily"
     DUCKDUCKGO = "duckduckgo"
@@ -15,3 +11,4 @@ class SearchEngine(enum.Enum):
     
 # TOOL CONFIGURATION 
 SELECTED_SEARCH_ENGINE = os.getenv("SEARCH_API", SearchEngine.TAVILY.value)
+

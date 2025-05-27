@@ -1,7 +1,7 @@
 from langgraph.prebuilt import create_react_agent
 
 from backend.prompts import apply_prompt_template 
-from backend.config.agents import AGENT_LLM_MAP 
+from backend.config.agents_map import AGENT_LLM_MAP 
 
 from .llms import get_llm_by_type
 

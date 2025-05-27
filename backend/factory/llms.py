@@ -4,7 +4,7 @@ from pathlib import Path
 from langchain_openai import ChatOpenAI  
 
 from backend.config import load_yaml_config 
-from backend.config.agents import LLMType
+from backend.config.agents_map import LLMType
 
 
 # Create for LLM Instance 
